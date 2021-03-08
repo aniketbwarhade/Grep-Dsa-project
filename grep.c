@@ -1,8 +1,10 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include<string.h>
 #include<stdlib.h>
 #include <dirent.h>
 #include<fcntl.h>
+#include "grep.h"
 void openDir(char *base) 
 { 
     struct dirent *de;  // Pointer for directory entry 
@@ -38,21 +40,34 @@ int find(char *word, char *line) {
     else
         return 0;
 }
-int main(){
-    // char base[]="C:\Users\anike\Desktop\Dsa-project";
-    // openDir(base);
-    int fd;
+
+// int main(){
+//     // char base[]="C:\Users\anike\Desktop\Dsa-project";
+//     // openDir(base);
+//     int fd;
+//     char line[1024];
+//     fd=open("C:/Users/anike/Desktop/Dsa-project/abc.txt",O_RDONLY);
+//     if(fd!=-1){
+//         while(readLine(fd,line)){
+//             if(find("aniket",line)==1)
+//                 printf("%s",line);
+//         }
+//     }
+//     else{
+//         printf("file can't open");
+//     }    
+//     close(fd);
+//     return 0;
+// }
+char smallTocapital(char a){
+    return a-32;
+}
+void optiflag(int fd,char *word){
     char line[1024];
-    fd=open("C:/Users/anike/Desktop/Dsa-project/abc.txt",O_RDONLY);
-    if(fd!=-1){
-        while(readLine(fd,line)){
-            if(find("aniket",line)==1)
-                printf("%s",line);
+    while(readLine(fd,line)){
+        if((strcasestr(line,word))!=NULL){
+            printf("%s",line);
         }
+        
     }
-    else{
-        printf("file can't open");
-    }    
-    close(fd);
-    return 0;
 }
