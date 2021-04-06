@@ -20,20 +20,7 @@ void openDir(char *base)
     closedir(dr);     
     return ; 
 } 
-int readLine(int fd, char *line) {
-    int i =0;
-    char ch;
-    while(read(fd, &ch, 1) ) {
-    	if(ch != '\n')
-			line[i++] = ch;
-		else if(ch == '\n') {
-			line[i] = '\0';
-			return i + 1;
-		}
-	}
-	line[i] = '\0';
-    return i;    
-}
+
 int find(char *word, char *line) {
     if((strstr(line, word)) != NULL) 
         return 1;
@@ -59,9 +46,6 @@ int find(char *word, char *line) {
 //     close(fd);
 //     return 0;
 // }
-char smallTocapital(char a){
-    return a-32;
-}
 void optiflag(int fd,char *word){
     char line[1024];
     while(readLine(fd,line)){

@@ -21,7 +21,7 @@ node *newNode(char *fileName){
     temp->next=NULL;
     return temp;
 }
-// insert to function to add filename in the list 
+// insert  function to add filename in the list 
 void insert(list *l,char *fileName){
     if(l->front==NULL){
         l->front=newNode(fileName);

@@ -1,22 +1,21 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<getopt.h>
 #include<dirent.h>
 #include<unistd.h>
 #include<fcntl.h>
-#include "grep.h"
+#include "list.h"
+#include "functions.h"
 int main(int argc,char **argv){
-    char fileName[50];
-    strcpy(fileName,argv[argc-1]);
+    char *fileName;
+    list l;
     char word[50];
-    strcpy(word,argv[argc-2]);
-     int fd;
-    char line[1024];
-    fd=open(fileName,O_RDONLY);
+     int fd,i,j;
+    char line[1024],line1[1024];
     int opt;
-    int iflag=0,cflag=0,fflag=0,hflag=0,Hflag=0,nflag=0,lflag=0,wflag=0,oflag=0,eflag=0,vflag=0,Eflag=0;
-    printf("%d",cflag);
-    while((opt=getopt(argc,argv,"icfhHnlwoevE")!=-1)){
+    int iflag=0,cflag=0,fflag=0,hflag=0,Hflag=0,nflag=0,lflag=0,wflag=0,oflag=0,eflag=0,vflag=0,Eflag=0,flag=1;
+    while((opt=getopt(argc,argv,"siwvcHonlhm:bqre:f:"))!=-1){
         switch(opt){
             case 'i':
                 iflag=1;
@@ -51,11 +50,61 @@ int main(int argc,char **argv){
             case 'v':
                 vflag=1;
                 break;
-            
+            case 's':
+                flag=1;
+                break;
         }
     }
-    if(iflag==1){
-        optiflag(fd,word);
+    strcpy(word,argv[argc-2]);
+    init(&l);
+    if(fflag==1){
+        i=3;
+        flag=0;
+    }
+    else
+        i=1;
+    j=0;
+    while(i<argc){
+        if(dotpresent(argv[i]) && !dashpresent(argv[i])){
+            insert(&l,argv[i]);
+            j++;
+        }
+        else if(!dotpresent(argv[i])&&!dashpresent(argv[i])){
+            strcpy(word,argv[i]);
+        }
+        else if(dashpresent(argv[i])){
+            flag=0;
+        }
+        i++;
+    }
+    if(flag==1){
+        while(!isempty(&l)){
+            fileName=pop(&l);
+            fd=open(fileName,O_RDONLY);
+            if(fd==-1){
+                printf("%s: %s: No such file or directory\n", argv[0], fileName);
+				continue;
+            }
+            else{
+                while(readLine(fd,line)){
+                    if(search(word,line,iflag,wflag)==1){
+                        printf("%s",line);
+                        // if(j != 1 || Hflag)
+    		 			//     Hprint(fileName);				
+    		 		    // if(!cflag) {
+    	 				//     if(!iflag)	
+  	    	 			// 	    highlight(word, line);
+  	    	 			//     else
+  	    	 		    // }	
+                        // highlight(word,line);
+
+                    }
+                }
+            }
+
+        }
+
+
     }
     // if(fd!=-1){
     //     while(readLine(fd,line)){
@@ -67,5 +116,5 @@ int main(int argc,char **argv){
     //     printf("file can't open");
     // }    
     // close(fd);
-return 0;
+    return 0;
 }
