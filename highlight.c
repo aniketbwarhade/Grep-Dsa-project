@@ -1,8 +1,14 @@
-// Ansi color
-// use of ansi color code to highlight search string in differnt color
 #include<stdio.h>
 #include<string.h>
 #include "functions.h"
+
+// Ansi color
+// use of ansi enscape  code to highlight and give style to search string in differnt color and different style
+
+// \033 is an ascii value of ESC sequence in octal
+void reset () {
+  printf("\033[0m");
+}
 void red () {
   printf("\033[1;31m");
 }
@@ -23,9 +29,7 @@ void green() {
 	printf("\033[0;32m");
 }
 
-void reset () {
-  printf("\033[0m");
-}
+
 
 void highlight(char *word, char *line) {
 	int h, i =0, j = strlen(word);
