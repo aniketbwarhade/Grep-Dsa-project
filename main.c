@@ -1,18 +1,18 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<getopt.h>
-#include<dirent.h>
 #include<unistd.h>
-#include<fcntl.h>
+#include<dirent.h>
 #include "list.h"
+#include<fcntl.h>
 #include "functions.h"
+#include"highlight.h"
 int main(int argc,char **argv){
     char *fileName;
     list l;
     char word[50];
-     int fd,i,j;
-    char line[1024],line1[1024];
+    int fd,i,j;
+    char line[1024],expr[1024];
     int opt;
     int iflag=0,cflag=0,fflag=0,hflag=0,Hflag=0,nflag=0,lflag=0,wflag=0,oflag=0,eflag=0,vflag=0,Eflag=0,flag=1;
     while((opt=getopt(argc,argv,"siwvcHonlhm:bqre:f:"))!=-1){
@@ -50,7 +50,7 @@ int main(int argc,char **argv){
             case 'v':
                 vflag=1;
                 break;
-            case 's':
+            default:
                 flag=1;
                 break;
         }
@@ -78,7 +78,7 @@ int main(int argc,char **argv){
         i++;
     }
     if(flag==1){
-        while(!isempty(&l)){
+        while(!isempty(l)){
             fileName=pop(&l);
             fd=open(fileName,O_RDONLY);
             if(fd==-1){
@@ -88,16 +88,14 @@ int main(int argc,char **argv){
             else{
                 while(readLine(fd,line)){
                     if(search(word,line,iflag,wflag)==1){
-                        printf("%s",line);
-                        // if(j != 1 || Hflag)
-    		 			//     Hprint(fileName);				
-    		 		    // if(!cflag) {
-    	 				//     if(!iflag)	
-  	    	 			// 	    highlight(word, line);
-  	    	 			//     else
-  	    	 		    // }	
-                        // highlight(word,line);
-
+                        if(j != 1 || Hflag)
+    		 			    Hfile(fileName);				
+    		 		    if(!cflag) {
+    	 				    if(!iflag)	
+  	    	 				    highlight(word, line);
+  	    	 			    else
+  	    	 				    printf("%s\n", line);
+  	    	 		    }
                     }
                 }
             }
@@ -106,15 +104,70 @@ int main(int argc,char **argv){
 
 
     }
-    // if(fd!=-1){
-    //     while(readLine(fd,line)){
-    //         if(find(word,line)==1)
-    //             printf("%s",line);
-    //     }
-    // }
-    // else{
-    //     printf("file can't open");
-    // }    
-    // close(fd);
+    if(cflag){
+        while(!isempty(l)){
+            fileName=pop(&l);
+            fd=open(fileName,O_RDONLY);
+            if(fd<0){
+                printf("%s: %s no such file or directory :\n",argv[0],fileName);
+                continue;
+            }
+            int c=0;
+            while(readLine(fd,line)){
+                if(kmpstrstr(line,word)){
+                    c++;
+                }
+            }
+            if(j!=1 || Hflag){
+                Hfile(fileName);
+            }
+            printf("%d",c);
+
+        }
+    }
+    if(fflag){
+        int expfile=open(optarg,O_RDONLY);
+        while(!isempty(l)){
+            fileName=pop(&l);
+            fd=open(fileName,O_RDONLY);
+            if(fd<0){
+                printf("%s: %s no such file or directory :\n",argv[0],fileName);
+                continue;
+            }
+            while(readLine(fd,line)){
+                int n=0;
+                while(readLine(expfile,expr)){
+                    int s=search(expr,line,iflag,wflag);
+                    if(s){
+                        n++;
+                        if(n==1){
+                            if(Hflag || j!=1)
+                                Hfile(fileName);
+                            if(!cflag){
+                                if(!oflag){
+                                    highlight(expr,line);
+                                }
+                                else{
+                                    red();
+                                    printf("%s\n",expr);
+                                    reset();
+
+                                }
+                            }
+                        }
+
+                    }
+                }
+                lseek(expfile, 0, SEEK_SET);
+            }
+
+            close(fd);
+            close(expfile);
+        }
+
+    }
     return 0;
 }
+
+
+

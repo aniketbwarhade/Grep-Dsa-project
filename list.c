@@ -46,8 +46,8 @@ char *pop(list *l){
 }
 
 // isempty function to check whether list is empty or not
-int isempty(list *l){
-    if(l->front==NULL){
+int isempty(list l){
+    if(l.front==NULL){
         return 1;
     }
     return 0;

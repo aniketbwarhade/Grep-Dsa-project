@@ -11,6 +11,6 @@ typedef struct list {
 void init(list *l);
 void insert(list *l, char fileName[]);
 char* pop(list*l);
-int isempty(list *l);
+int isempty(list l);
 // to create newnode
 node *newNode(char *fileName);

@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<fcntl.h>
-#include<ctype.h>
+#include "functions.h"
 // function to convert all string alphabet in lower case
 char *capitalTosmall(char *str){
     for(int i=0;i<strlen(str);i++){
@@ -13,7 +13,7 @@ char *capitalTosmall(char *str){
     return str;
 }
 // function to convert all string alphabet in upper case
-char *capitalTosmall(char *str){
+char *smallTocapital(char *str){
     for(int i=0;i<strlen(str);i++){
         if(str[i]>=97 && str[i]<=122){
             str[i]-=32;
@@ -54,97 +54,19 @@ int dashpresent(char *str) {
 	}
 	return 0;
 }
-// Ansi color
-// use of ansi color code to highlight search string in differnt color
-void red () {
-  printf("\033[1;31m");
+
+// implement strcasestr using kmp algorithm
+
+char *kmpstrcasestr(char *str, char *pattern) {
+    char capitalLetterline[1024];
+    char word[512];
+    strcpy(word,pattern);
+    strcpy(capitalLetterline,str);
+    strcpy(word,smallTocapital(word));
+    strcpy(capitalLetterline,smallTocapital(capitalLetterline));
+    return kmpstrstr(capitalLetterline,word);
 }
 
-void purple() {
-	printf("\033[0;35m");
-}
-
-void blue() {
-	printf("\033[0;34m");
-}
-
-void yellow() {
-	printf("\033[0;33m");
-}
-
-void green() {
-	printf("\033[0;32m");
-}
-
-void reset () {
-  printf("\033[0m");
-}
-
-// this function is available in c we can use by defining #include _GNU_SOURCE and including string.h but in vscode not run so function is directly taken from google
-char *strcasestr(const char *str, const char *pattern) {
-    size_t i;
-
-    if (!*pattern)
-        return (char*)str;
-
-    for (; *str; str++) {
-        if (toupper((unsigned char)*str) == toupper((unsigned char)*pattern)) {
-            for (i = 1;; i++) {
-                if (!pattern[i])
-                    return (char*)str;
-                if (toupper((unsigned char)str[i]) != toupper((unsigned char)pattern[i]))
-                    break;
-            }
-        }
-    }
-    return NULL;
-}
-// kmp algorithm to find substring in string
-char* kmpstrstr(const char* X, const char* Y)
-{
-	int m=strlen(X);
-	int n=strlen(Y);
-
-    // Base Case 1: Y is NULL or empty
-    if (*Y == '\0' || n == 0)
-        return X;
- 
-    // Base Case 2: X is NULL or X's length is less than that of Y's
-    if (*X == '\0' || n > m)
-        return NULL;
- 
-    // next[i] stores the index of next best partial match
-    int next[n + 1];
- 
-    for (int i = 0; i < n + 1; i++)
-        next[i] = 0;
- 
-    for (int i = 1; i < n; i++)
-    {
-        int j = next[i + 1];
- 
-        while (j > 0 && Y[j] != Y[i])
-            j = next[j];
- 
-        if (j > 0 || Y[j] == Y[i])
-            next[i + 1] = j + 1;
-    }
- 
-    for (int i = 0, j = 0; i < m; i++)
-    {
-        if (*(X + i) == *(Y + j))
-        {
-            if (++j == n)
-                return (X + i - j + 1);
-        }
-        else if (j > 0) {
-            j = next[j];
-            i--;    // since i will be incremented in next iteration
-        }
-    }
- 
-    return NULL;
-}
 void computeLPSArray(char* pat, int M, int* lps)
 {
     // length of the previous longest prefix suffix
@@ -179,7 +101,7 @@ void computeLPSArray(char* pat, int M, int* lps)
         }
     }
 }
-char* KMPSearch(char* txt, char* pat)
+char* kmpstrstr(char* txt, char* pat)
 {
 	int M = strlen(pat);
     int N = strlen(txt);
@@ -202,10 +124,10 @@ char* KMPSearch(char* txt, char* pat)
     int j = 0; // index for pat[]
     while (i < N) {
         if (pat[j] == txt[i]) {
-            j++;
             i++;
+            j++;
+            
         }
-  
         if (j == M) {
             return txt+i-j;
             // j = lps[j - 1]; if we want to find all occurences of pattern
@@ -227,15 +149,16 @@ char* KMPSearch(char* txt, char* pat)
 int search(char *word,char *line,int iflag,int wflag){
     int i,j,k;
     char str[512][256];
+
     if((iflag==0) && (wflag==0)){
-        if(KMPSearch(line,word)!=NULL){
+        if(kmpstrstr(line,word)!=NULL){
             return 1;
         }
         else    
             return 0;
     }
     if((iflag==1) && (wflag==0)){
-        if(strcasestr(line,word)!=NULL){
+        if(kmpstrcasestr(line,word)!=NULL){
             return 1;
         }
         else
@@ -264,8 +187,10 @@ int search(char *word,char *line,int iflag,int wflag){
     }
     if(iflag==1 && wflag==1){
         char smallLetterline[1024];
+        char patn[512];
         strcpy(smallLetterline, line);
-		strcpy(word, capitalTosmall(word));
+        strcpy(patn, word);
+		strcpy(word, capitalTosmall(patn));
 		strcpy(smallLetterline, capitalTosmall(smallLetterline));
 		while(i < strlen(smallLetterline) + 1) {
    	 			if((smallLetterline[i] >= 97 && smallLetterline[i] <= 122)) {
@@ -286,44 +211,6 @@ int search(char *word,char *line,int iflag,int wflag){
    	 		}
    	 		return 0;
     }
+    return 0;
 
 }
-void highlight(char *word, char *line) {
-	int h, i =0, j = strlen(word);
-	char *str;
-	str = strstr(line, word);
-	h = strlen(str);
-	h = strlen(line) - h;
-	while(line[i] != '\0') {
-		if(i == h) {
-			while(j) {
-				red();
-				printf("%c", line[i]);
-				reset();
-				j--;
-				i++;
-			}
-		}
-		else {
-			printf("%c", line[i]);
-			i++;
-		}
-	}
-	printf("\n");
-}
-
-void bprint(int k) {
-	green();
-	printf("%d", k);
-	blue();
-	printf(":");
-	reset();
-}
-
-void Hprint(char *filename) {
-	purple();
-    printf("%s", filename);
-    blue();
-    printf(":");
-    reset();
-}	
