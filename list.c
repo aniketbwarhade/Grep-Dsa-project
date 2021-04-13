@@ -16,7 +16,7 @@ node *newNode(char *fileName){
     if(!temp){
         return NULL;
     }
-    temp->fileName=(char *)malloc(sizeof(fileName));
+    temp->fileName=(char *)malloc(sizeof(char)*strlen(fileName));
     strcpy(temp->fileName,fileName);
     temp->next=NULL;
     return temp;

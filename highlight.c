@@ -31,10 +31,15 @@ void green() {
 
 
 
-void highlight(char *word, char *line) {
+void highlight(char *word, char *line,int iflag) {
 	int h, i =0, j = strlen(word);
 	char *str;
-	str = kmpstrstr(line, word);
+	if(iflag==1){
+		str = kmpstrcasestr(line, word);
+	}
+	else{
+		str = kmpstrstr(line, word);
+	}
 	h = strlen(str);
 	h = strlen(line) - h;
 	while(line[i] != '\0') {
@@ -64,8 +69,8 @@ void bprint(int k) {
 }
 
 void Hfile(char *filename) {
-	purple();
-    printf("%s ", filename);
+	yellow();
+    printf("\n%s ", filename);
     blue();
     printf(": ");
     reset();

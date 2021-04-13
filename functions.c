@@ -186,31 +186,31 @@ int search(char *word,char *line,int iflag,int wflag){
    	 		return 0;
     }
     if(iflag==1 && wflag==1){
+        i=0,j=0,k=0;
         char smallLetterline[1024];
         char patn[512];
         strcpy(smallLetterline, line);
         strcpy(patn, word);
-		strcpy(word, capitalTosmall(patn));
+		strcpy(patn, capitalTosmall(patn));
 		strcpy(smallLetterline, capitalTosmall(smallLetterline));
 		while(i < strlen(smallLetterline) + 1) {
-   	 			if((smallLetterline[i] >= 97 && smallLetterline[i] <= 122)) {
-   	 				str[j][k] = smallLetterline[i];
-   	 				i++;
-   	 				k++;
-   	 			}
-   	 			else {
-   	 				str[j][k] = '\0';
-   	 				j++;
-   	 				i++;
-   	 				k = 0;
-   	 			}
-   	 		}
-   	 		for(i = 0; i < j; i++) {
-   	 			if(strcmp(word, str[i]) == 0)
-   	 				return 1;
-   	 		}
-   	 		return 0;
+            if((smallLetterline[i] >= 97 && smallLetterline[i] <= 122)) {
+                str[j][k] = smallLetterline[i];
+                i++;
+                k++;
+            }
+            else {
+                str[j][k] = '\0';
+                j++;
+                i++;
+                k = 0;
+            }
+   	 	}
+        for(i = 0; i < j; i++) {
+            if(strcmp(patn, str[i]) == 0)
+                return 1;
+        }
+        return 0;
     }
     return 0;
-
 }

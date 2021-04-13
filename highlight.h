@@ -4,7 +4,7 @@ void blue();
 void yellow();
 void green();
 void reset ();
-void highlight(char *word, char *line);
+void highlight(char *word, char *line,int iflag);
 void bprint(int k);
 void Hfile(char *filename);   // highlight file
 
