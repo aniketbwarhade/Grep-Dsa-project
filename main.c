@@ -11,7 +11,7 @@
 int main(int argc,char **argv){
     list l;
     char word[50];
-    int  i,j,mval;
+    int  i,j,mval,Aval,Bval,Cval;
     char fval[50];
     char **expr;
     expr=(char **)malloc(sizeof(char *)*20);
@@ -21,7 +21,8 @@ int main(int argc,char **argv){
     // printf("%s\n",argv[0]);
     
     int opt,e=0;
-    int iflag=0,cflag=0,fflag=0,hflag=0,bflag=0,mflag=0,Hflag=0,nflag=0,lflag=0,wflag=0,rflag=0,oflag=0,eflag=0,vflag=0,flag=1;
+    int iflag=0,cflag=0,fflag=0,hflag=0,bflag=0,mflag=0,Hflag=0,nflag=0,lflag=0;
+    int wflag=0,rflag=0,oflag=0,eflag=0,vflag=0,flag=1,Aflag=0,Bflag=0,Cflag=0;
     if(argc == 1 || argc==2) {
     	if( strcmp(argv[1],"--help")==0) {
     		printHelp();
@@ -31,8 +32,20 @@ int main(int argc,char **argv){
     	printf("Try 'grep --help' for more information.\n");
     	return 0;
     }
-    while((opt=getopt(argc,argv,"iwvcHonlhbr:e:f:m:"))!=-1){
+    while((opt=getopt(argc,argv,":A:B:C:iwvcHonlhbr:e:f:m:"))!=-1){
         switch(opt){
+            case 'A':
+                Aflag=1;
+                Aval=atoi(optarg);
+                break;
+            case 'B':
+                Bflag=1;
+                Bval=atoi(optarg);
+                break;
+            case 'C':
+                Cflag=1;
+                Cval=atoi(optarg);
+                break;
             case 'i':
                 iflag=1;
                 break;
@@ -152,6 +165,16 @@ int main(int argc,char **argv){
 	}
     if(Hflag){
         return switch_Hflag(word,argv[0],&l,iflag,wflag);
+    }
+    if(Aflag){
+        return switch_Aflag(word,argv[0],Aval,&l,Hflag,j,iflag,wflag);
+        
+    }
+    if(Bflag){
+        return switch_Bflag(word,argv[0],Bval,&l,Hflag,j,iflag,wflag);
+    }
+    if(Cflag){
+        return switch_Cflag(word,argv[0],Cval,&l,Hflag,j,iflag,wflag);
     }
     return 0;
 }

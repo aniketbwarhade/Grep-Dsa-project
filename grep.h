@@ -17,6 +17,9 @@ int switch_fflag(char *word,char *argv,list *l,char* fval,int Hflag,int j,int of
 int switch_rflag(char *word,char **argv,int argc,list *l,int lflag,int Hflag,int oflag,int bflag,int vflag,int iflag,int wflag,int cflag);
 int switch_defaultflag(char *word,char *argv,list *l,int Hflag,int j,int iflag,int wflag,int cflag,int oflag);
 int switch_eflag(char *word,char *argv,int e,list *l,char **expr,int Hflag,int j,int iflag,int wflag,int cflag,int oflag);
+int switch_Aflag(char *word,char *argv,int Aval,list *l,int Hflag,int j,int iflag,int wflag);
+int switch_Bflag(char *word,char *argv,int Bval,list *l,int Hflag,int j,int iflag,int wflag);
+int switch_Cflag(char *word,char *argv,int Cval,list *l,int Hflag,int j,int iflag,int wflag);
 
 
 

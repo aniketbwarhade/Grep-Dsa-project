@@ -357,7 +357,7 @@ int switch_bflag(char *word,char *argv,list *l,int Hflag,int j,int oflag,int ifl
                         printf("%s\n", line);
                 }
             }
-            i = i + strlen(line) + 1;
+            i = i + strlen(line) + 2;     // a newline generates two ascii characters "\r\n" (carriage return, line feed) 
         }
         close(fd);
    	}
@@ -666,4 +666,135 @@ int switch_eflag(char *word,char *argv,int e,list *l,char **expr,int Hflag,int j
             close(fd);
         }
         return 0;
+}
+
+
+int switch_Aflag(char *word,char *argv,int Aval,list *l,int Hflag,int j,int iflag,int wflag){
+    char line[1024];
+    int found=0;
+    while(!isempty(*l)){
+        char *fileName=pop(l);
+        int fd=open(fileName,O_RDONLY);
+        if(fd==-1){
+            printf("%s: %s: No such file or directory\n", argv, fileName);
+            continue;
+        }
+        else{
+            while(readLine(fd,line)){
+                if(found){
+                    if(j!=1 || Hflag){
+                        Hfile(fileName);
+                    }
+                    printf("%s\n",line);
+                    found--;
+                    if(found==0)
+                        printf("\n----\n");
+                }
+                else if(search(word,line,iflag,wflag)==1){
+                    if(j!=1 || Hflag){
+                        Hfile(fileName);
+                    }
+                    highlight(word,line,iflag);
+                    found=Aval;
+                }
+            }
+        }
+
+    }
+
+    return 0;
+}
+int switch_Bflag(char *word,char *argv,int Bval,list *l,int Hflag,int j,int iflag,int wflag){
+    char line[1024],line2[1024];
+    int n=0,c=0;
+    while(!isempty(*l)){
+        char *fileName=pop(l);
+        int fd=open(fileName,O_RDONLY);
+        n=0;
+        if(fd==-1){
+            printf("%s: %s: No such file or directory\n", argv, fileName);
+            continue;
+        }
+        else{
+            while(readLine(fd,line)){
+                n++;
+                if(search(word,line,iflag,wflag)==1){
+                    lseek(fd,0,SEEK_SET);
+                    c=0;
+                    while(readLine(fd,line2)){
+                        c++;
+                        if(c>=n-Bval && c<n){
+                            if(j!=1 || Hflag){
+                                Hfile(fileName);
+                            }
+                            printf("%s\n",line2);
+                        }
+                        if(c==n){
+                            if(j!=1 || Hflag){
+                                Hfile(fileName);
+                            }
+                            highlight(word,line2,iflag);
+                            printf("\n----\n");
+                            break;
+                        }
+
+                    }
+                    lseek(fd,0,SEEK_CUR);
+                }
+            }
+        }
+
+    }
+
+    return 0;
+}
+
+int switch_Cflag(char *word,char *argv,int Cval,list *l,int Hflag,int j,int iflag,int wflag){
+     char line[1024],line2[1024];
+    int n=0,c=0,ofst=0;
+    while(!isempty(*l)){
+        char *fileName=pop(l);
+        int fd=open(fileName,O_RDONLY);
+        n=0;
+        ofst=0;
+        if(fd==-1){
+            printf("%s: %s: No such file or directory\n", argv, fileName);
+            continue;
+        }
+        else{
+            while(readLine(fd,line)){
+                n++;
+                ofst+=strlen(line)+2;  // a newline generates two ascii characters "\r\n" (carriage return, line feed) 
+                if(search(word,line,iflag,wflag)==1){
+                    lseek(fd,0,SEEK_SET);
+                    c=0;
+                    while(readLine(fd,line2)){
+                        c++;
+                        if(c==n){
+                            if(j!=1 || Hflag){
+                                Hfile(fileName);
+                            }
+                            highlight(word,line2,iflag);
+                            continue;
+                        }
+                        if(c>=n-Cval && c<=n+Cval){
+                            if(j!=1 || Hflag){
+                                Hfile(fileName);
+                            }
+                            printf("%s\n",line2);
+                        }
+                        if(c==n+Cval){
+                            printf("\n----\n");
+                            break;
+                        }
+                            
+                    }
+                    lseek(fd,ofst,SEEK_SET);
+                }
+            }
+        }
+
+    }
+
+    return 0;
 }

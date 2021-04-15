@@ -8,7 +8,7 @@ Below are the some sample test command which I have succesfully implemented usin
   5. grep -w Aniket file2.txt
   6. grep -o aniket file2.txt
   7. grep -H aniket abc.txt file1.txt file2.txt
-  8. grep -r -l aniket .
+  8. grep -l -r aniket .
   9. grep -i aniket abc.txt file2.txt 
   10. grep -e aniket -e coep -e pune -e the abc.txt file1.txt file2.txt
   11. grep -f pattern.txt  file1.txt abc.txt file2.txt
@@ -33,5 +33,7 @@ Below are the some sample test command which I have succesfully implemented usin
   30. grep -i -w -H -c aniket abc.txt file1.txt
   31. grep -i -w -v -H -c aniket abc.txt file1.txt 
   32. grep -i -w -v -H -b  aniket abc.txt file1.txt    
-  grep -i -w -v  -b  aniket abc.txt
-
+  33. grep -i -w -v  -b  aniket abc.txt
+  34. grep  -A 2  aniket abc.txt
+  35. grep  -B 2  aniket file1.txt  
+  36. grep  -c 3  aniket file1.txt abc.txt

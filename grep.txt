@@ -17,3 +17,6 @@ grep options/flag that I have Implemented :
 -w : It matches the whole word from the file
 -m : it will search for only specified numberr of matches .(stop reading files after specified matched line).
 -b : it will print byte offset within input file before matched line.(number of character present before matched line).
+-A : Prints searched line and nlines after the result.
+-B : Prints searched line and n line before the result.
+-C : Prints searched line and n lines after before the result.
