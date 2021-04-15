@@ -5,6 +5,7 @@ int dashpresent(char *str);
 int search(char *word,char *line,int iflag,int wflag);
 char* kmpstrstr(char* txt, char* pat);
 char *kmpstrcasestr(char *str, char *pattern);
+void printHelp();
 
 
 // MINGW32-make  to run makefile inside mingw

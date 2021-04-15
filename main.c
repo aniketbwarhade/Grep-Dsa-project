@@ -18,9 +18,20 @@ int main(int argc,char **argv){
     for(int k=0;k<20;k++){
         expr[k]=(char *)malloc(sizeof(char)*40);
     }
+    // printf("%s\n",argv[0]);
+    
     int opt,e=0;
-    int iflag=0,cflag=0,fflag=0,hflag=0,bflag=0,mflag=0,Hflag=0,nflag=0,lflag=0,wflag=0,rflag=0,oflag=0,eflag=0,vflag=0,Eflag=0,flag=1;
-    while((opt=getopt(argc,argv,"siwvcHonlhbqr:e:f:m:"))!=-1){
+    int iflag=0,cflag=0,fflag=0,hflag=0,bflag=0,mflag=0,Hflag=0,nflag=0,lflag=0,wflag=0,rflag=0,oflag=0,eflag=0,vflag=0,flag=1;
+    if(argc == 1 || argc==2) {
+    	if( strcmp(argv[1],"--help")==0) {
+    		printHelp();
+    		return 0;
+    	}
+    	printf("Use: grep [OPTION]... PATTERNS [FILE]...\n");
+    	printf("Try 'grep --help' for more information.\n");
+    	return 0;
+    }
+    while((opt=getopt(argc,argv,"iwvcHonlhbr:e:f:m:"))!=-1){
         switch(opt){
             case 'i':
                 iflag=1;

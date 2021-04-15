@@ -60,7 +60,7 @@ void highlight(char *word, char *line,int iflag) {
 	printf("\n");
 }
 
-void bprint(int k) {
+void Hbyte_offset(int k) {
 	green();
 	printf("%d", k);
 	blue();

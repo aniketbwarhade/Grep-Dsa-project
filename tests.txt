@@ -1,0 +1,37 @@
+
+Below are the some sample test command which I have succesfully implemented using various combination of flags.
+
+  1. grep aniket file2.txt
+  2. grep -r  aniket .  
+  3. grep -n aniket abc.txt
+  4. grep -c aniket abc.txt
+  5. grep -w Aniket file2.txt
+  6. grep -o aniket file2.txt
+  7. grep -H aniket abc.txt file1.txt file2.txt
+  8. grep -r -l aniket .
+  9. grep -i aniket abc.txt file2.txt 
+  10. grep -e aniket -e coep -e pune -e the abc.txt file1.txt file2.txt
+  11. grep -f pattern.txt  file1.txt abc.txt file2.txt
+  12. grep -m  2 aniket abc.txt file2.txt
+  13. grep -b aniket abc.txt file2.txt
+  14. grep -v aniket abc.txt file2.txt
+  15. grep -i -c aniket abc.txt file2.txt
+  16. grep -i -H aniket abc.txt file2.txt file1.txt
+  17. grep -i -H -c aniket abc.txt file2.txt file1.txt
+  18. grep -w -H  aniket abc.txt file2.txt file1.txt
+  19. grep -i -w -H  aniket abc.txt file2.txt file1.txt 
+  20. grep -i -w -H -c  aniket abc.txt file2.txt file1.txt 
+  21. grep -i -H -w -v aniket abc.txt
+  22. grep -i -H -w -v -c aniket abc.txt 
+  23. grep -H -v  aniket abc.txt
+  24. grep -H -v -c  aniket abc.txt file1.txt file2.txt
+  25. grep -i -H -b  aniket abc.txt file1.txt file2.txt
+  26. grep -i -H -b -c aniket abc.txt file1.txt file2.txt  
+  27. grep -i -v -H   aniket abc.txt file1.txt file2.txt
+  28. grep -i -v -H -c aniket abc.txt
+  29. grep -i -w -H -b  aniket abc.txt   
+  30. grep -i -w -H -c aniket abc.txt file1.txt
+  31. grep -i -w -v -H -c aniket abc.txt file1.txt 
+  32. grep -i -w -v -H -b  aniket abc.txt file1.txt    
+  grep -i -w -v  -b  aniket abc.txt
+

@@ -292,7 +292,7 @@ int switch_mflag(char *word,char *argv,list *l,int Hflag,int j,int oflag,int ifl
 						if(j != 1 || Hflag)
 							Hfile(fileName);
 						if(bflag)
-							bprint(k);
+							Hbyte_offset(k);
     	 				if(!oflag)	
   	    	 				highlight(word, line,iflag);
   	    	 			else
@@ -305,7 +305,7 @@ int switch_mflag(char *word,char *argv,list *l,int Hflag,int j,int oflag,int ifl
 						if(j != 1 || Hflag)
 							Hfile(fileName);
 						if(bflag)
-							bprint(k);
+							Hbyte_offset(k);
     	 				if(!oflag)	
   	    	 				highlight(word, line,iflag);
   	    	 			else
@@ -383,7 +383,7 @@ int switch_iflag(char *word,char *argv,list *l,int Hflag,int j,int nflag,int ofl
                             Hfile(fileName);
                     }
                     if(bflag){
-                        bprint(k);
+                        Hbyte_offset(k);
                     }
                     if(!cflag){
                         highlight(word,line,iflag);
@@ -392,7 +392,7 @@ int switch_iflag(char *word,char *argv,list *l,int Hflag,int j,int nflag,int ofl
                 else if((!search(word, line, iflag, wflag)) && vflag) {
                     f++;
                     if(bflag)
-                        bprint(k);
+                        Hbyte_offset(k);
                     if(j != 1 || Hflag) {
                         if(!cflag)
                             Hfile(fileName);
@@ -445,14 +445,15 @@ int switch_iflag(char *word,char *argv,list *l,int Hflag,int j,int nflag,int ofl
                                         printf("%s\n", word);
                                 }
                             }
+                            if(j != 1 || Hflag)
+                                Hfile(fileName);
+                            if(bflag)
+                                Hbyte_offset(k);
+                            if(!cflag) {
+                                printf("%s\n", line);
+                            }
                         }
-                        if(j != 1 || Hflag)
-                            Hfile(fileName);
-                        if(bflag)
-                            bprint(k);
-                        if(!cflag) {
-                            printf("%s\n", line);
-                        }
+                        
                     }
                 }		
                 else {
@@ -461,7 +462,7 @@ int switch_iflag(char *word,char *argv,list *l,int Hflag,int j,int nflag,int ofl
                             if(j != 1 || Hflag)
                                 Hfile(fileName);
                             if(bflag)
-                                bprint(k);
+                                Hbyte_offset(k);
                             if(!cflag) {
                                 if(!oflag)	
                                     highlight(word, line,iflag);
@@ -528,8 +529,8 @@ int switch_fflag(char *word,char *argv,list *l,char* fval,int Hflag,int j,int of
             }
 
             close(fd);
-            close(expfile);
         }
+        close(expfile);
         return 0;
 }
 

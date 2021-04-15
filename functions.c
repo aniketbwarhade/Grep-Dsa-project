@@ -214,3 +214,50 @@ int search(char *word,char *line,int iflag,int wflag){
     }
     return 0;
 }
+
+
+void printHelp() {
+		printf("Usage: grep [OPTION]... PATTERNS [FILE]...\n");
+		printf("Search for PATTERNS in each FILE.\n");
+		printf("Example: grep -i 'hello world' menu.txt main.txt\n");
+		printf("PATTERNS can contain multiple patterns separated by newlines.\n\n");
+
+		printf("Pattern selection and interpretation:\n");	
+		printf("\t-G, --basic-regexp        PATTERNS are basic regular expressions\n"); //default
+  		printf("\t-e, --regexp=PATTERNS     use PATTERNS for matching\n");
+  		printf("\t-f, --file=FILE           take PATTERNS from FILE\n");
+  		printf("\t-i, --ignore-case         ignore case distinctions\n");
+  		printf("\t-w, --word-regexp         match only whole words\n");
+
+		printf("Miscellaneous:\n");
+  		printf("\t-v, --invert-match        select non-matching lines\n");
+      	printf("\t--help                display this help text and exit\n\n");
+
+		printf("Output control:\n");
+  		printf("\t-m, --max-count=NUM       stop after NUM selected lines\n");
+  		printf("\t-b, --byte-offset         print the byte offset with output lines\n");
+  		printf("\t-n, --line-number         print line number with output lines\n");
+  		printf("\t-H, --with-filename       print file name with output lines\n");
+  		printf("\t-h, --no-filename         suppress the file name prefix on output\n");
+  		printf("\t-o, --only-matching       show only nonempty parts of lines that match\n");
+  		printf("\t-q, --quiet, --silent     suppress all normal output\n");
+  		printf("\t-r, --recursive           like --directories=recurse\n");
+  		printf("\t-L, --files-without-match  print only names of FILEs with no selected lines\n");
+  		printf("\t-l, --files-with-matches  print only names of FILEs with selected lines\n");
+ 		printf("\t-c, --count               print only a count of selected lines per FILE\n");
+
+		printf("Context control:\n");
+  		printf("\t-B, --before-context=NUM  print NUM lines of leading context\n");
+  		printf("\t-A, --after-context=NUM   print NUM lines of trailing context\n");
+  		printf("\t-C, --context=NUM         print NUM lines of output context\n");
+
+		printf("When FILE is '-', read standard input.  With no FILE, read '.' if\n");
+		printf("recursive, '-' otherwise.  With fewer than two FILEs, assume -h.\n");
+		printf("Exit status is 0 if any line (or file if -L) is selected, 1 otherwise;\n");
+		printf("\tif any error occurs and -q is not given, the exit status is 2.\n\n");
+
+		printf("Report bugs to: bug-grep@gnu.org\n");
+		printf("GNU grep home page: <http://www.gnu.org/software/grep/>\n");
+		printf("General help using GNU software: <https://www.gnu.org/gethelp/>\n");
+		return;
+}
