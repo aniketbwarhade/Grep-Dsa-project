@@ -47,4 +47,4 @@ Try various options .
 
 -B : Prints searched line and n line before the result.
 
--C : Prints searched line and n lines after before the result.
+-C : Prints searched line and n lines after and before the result.
