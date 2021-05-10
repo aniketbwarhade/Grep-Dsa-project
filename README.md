@@ -4,7 +4,7 @@ Repository contain 'Grep Command' In Linux as mini project of dataStructure subj
 grep stands for global regular expression print (globally search for a regular expression and print matching lines).
 grep is a  one of the most powerful and commonly used commands in Linux.
 
-## To run The code :
+## How to run the project :
 
 Download this files into a particular directory.
 Open the terminal and cd to directory where project files are present.
@@ -43,7 +43,7 @@ Try various options .
 
 -b : it will print byte offset within input file before matched line.(number of character present before matched line).
 
--A : Prints searched line and nlines after the result.
+-A : Prints searched line and n lines after the result.
 
 -B : Prints searched line and n line before the result.
 
