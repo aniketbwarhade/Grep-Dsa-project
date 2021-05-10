@@ -4,7 +4,8 @@ Repository contain 'Grep Command' In Linux as mini project of dataStructure subj
 grep stands for global regular expression print (globally search for a regular expression and print matching lines).
 grep is a  one of the most powerful and commonly used commands in Linux.
 
-To run The code :
+## To run The code :
+
 Download this files into a particular directory.
 Open the terminal and cd to directory where project files are present.
 Compile whole project by using 'make' command.
