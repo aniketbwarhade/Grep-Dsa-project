@@ -85,13 +85,10 @@ void computeLPSArray(char* pat, int M, int* lps)
         else // (pat[i] != pat[len])
         {
             // This is tricky. Consider the example.
-            // AAACAAAA and i = 7. The idea is similar
+            // AABAAC and i = 7. The idea is similar
             // to search step.
             if (len != 0) {
                 len = lps[len - 1];
-  
-                // Also, note that we do not increment
-                // i here
             }
             else // if (len == 0)
             {
@@ -130,13 +127,10 @@ char* kmpstrstr(char* txt, char* pat)
         }
         if (j == M) {
             return txt+i-j;
-            // j = lps[j - 1]; if we want to find all occurences of pattern
         }
   
         // mismatch after j matches
-        else if (i < N && pat[j] != txt[i]) {
-            // Do not match lps[0..lps[j-1]] characters,
-            // they will match anyway
+        else if (i < N && pat[j] != txt[i]){
             if (j != 0)
                 j = lps[j - 1];
             else
@@ -240,7 +234,6 @@ void printHelp() {
   		printf("\t-H, --with-filename       print file name with output lines\n");
   		printf("\t-h, --no-filename         suppress the file name prefix on output\n");
   		printf("\t-o, --only-matching       show only nonempty parts of lines that match\n");
-  		printf("\t-q, --quiet, --silent     suppress all normal output\n");
   		printf("\t-r, --recursive           like --directories=recurse\n");
   		printf("\t-L, --files-without-match  print only names of FILEs with no selected lines\n");
   		printf("\t-l, --files-with-matches  print only names of FILEs with selected lines\n");

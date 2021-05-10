@@ -36,4 +36,4 @@ Below are the some sample test command which I have succesfully implemented usin
   33. grep -i -w -v  -b  aniket abc.txt
   34. grep  -A 2  aniket abc.txt
   35. grep  -B 2  aniket file1.txt  
-  36. grep  -c 3  aniket file1.txt abc.txt
+  36. grep  -C 3  aniket file1.txt abc.txt
