@@ -13,7 +13,7 @@ Run it by typing grep filename.
 Try various options .
 
 
-grep options/flag that I have Implemented :
+## grep options/flag that I have Implemented :
 
 -r : recursively  search pattern in all file present in directory. 
 
